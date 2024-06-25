@@ -29,14 +29,14 @@ const CreateQuiz = () => {
     return (
         <div>
             {questions.map((question, questionIndex) => {
-                return <div key={questionIndex} className='question'>
-                    <div className="questionTitle">
+                return <div key={questionIndex} className='question flex flex-col items-center gap-[15px]'>
+                    <div className="questionTitle flex flex-row gap-4">
                         <label>{questionIndex + 1}.</label>
                         <input type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
                     </div>
-                    <div className="options">
+                    <div className="options flex flex-col gap-[20px]">
                         {question.options.map((option, optionIndex) => {
-                            return <div key={optionIndex} className='option'>
+                            return <div key={optionIndex} className='option flex flex-row gap-[10px] items-center'>
                                 <input type="radio" id={questionIndex + ":" + optionIndex} name={questionIndex} onChange={(e) => handleInputChange(e, questionIndex, optionIndex, true)} />
                                 <label htmlFor={questionIndex + ":" + optionIndex}>
                                     <input type='text' value={option} placeholder={'Option ' + (optionIndex + 1)} onChange={(e) => handleInputChange(e, questionIndex, optionIndex = optionIndex)} />
