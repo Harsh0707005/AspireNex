@@ -6,6 +6,17 @@ const CreateQuiz = () => {
     const handleInputChange = (e, questionIndex, optionIndex = null, selectCorrect = false) => {
         const updatedQuestions = [...questions]
         if (selectCorrect) {
+            if (updatedQuestions[questionIndex].answer !== -1){
+                document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.classList.remove("bg-green-400")
+                document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.querySelectorAll('input').forEach((input) => {
+                    input.classList.remove("bg-green-400")
+                
+                })
+            }
+            e.target.parentElement.classList.add('bg-green-400')
+            e.target.parentElement.querySelectorAll('input').forEach((input) => {
+                input.classList.add("bg-green-400")
+            })
             updatedQuestions[questionIndex].answer = optionIndex + 1
             setQuestions(updatedQuestions)
             return
@@ -37,7 +48,7 @@ const CreateQuiz = () => {
                     <div className="options flex flex-col gap-[20px]">
                         {question.options.map((option, optionIndex) => {
                             return <div key={optionIndex} className='option flex flex-row gap-[10px] items-center'>
-                                <input type="radio" id={questionIndex + ":" + optionIndex} name={questionIndex} onChange={(e) => handleInputChange(e, questionIndex, optionIndex, true)} />
+                                <input type="radio" id={questionIndex + ":" + (optionIndex+1)} name={questionIndex} onChange={(e) => handleInputChange(e, questionIndex, optionIndex, true)} />
                                 <label htmlFor={questionIndex + ":" + optionIndex}>
                                     <input type='text' value={option} placeholder={'Option ' + (optionIndex + 1)} onChange={(e) => handleInputChange(e, questionIndex, optionIndex = optionIndex)} />
                                 </label>
