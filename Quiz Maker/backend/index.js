@@ -3,7 +3,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const { v4: uuidv4 } = require('uuid');
 const port = 3000;
 
 const app = express();
@@ -18,15 +17,21 @@ mongoose.connect('mongodb://localhost:27017/quizMaker', { useNewUrlParser: true,
 // Quiz.insertMany({ id: 'quiz3', questions: [{ title: "ti", options: ['1d', 'dc'], answer: 3 }, {title:"titu", options:['fsd', 'fcds'], answer:2}] })
 
 app.post('/api/createQuiz', (req, res) => {
-    // console.log(req.body.questions)
-    let id = uuidv4();
-    // console.log(id)
-    Quiz.insertMany({ id: id, questions: req.body.questions}).then(()=>{
+
+    Quiz.insertMany({questions: req.body.questions}).then((doc)=>{
+        console.log(doc[0]._id.toString())
         res.status(201).send("Quiz created successfully")
     }).catch((e)=>{
+        console.log(e)
         res.status(400).send("Failed to create quiz")
     })
-    // res.status(201).send("Hello GET")
+})
+
+app.get("/quiz/:path", async(req, res) => {
+    let quizId = req.params.path
+    const question = await Quiz.findById(quizId)
+    console.log(question)
+    res.send("Fs")
 })
 
 app.listen(port, () => {
