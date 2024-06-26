@@ -49,8 +49,8 @@ const CreateQuiz = () => {
         <div className='flex flex-col gap-[20px]'>
             {questions.map((question, questionIndex) => {
                 return <div key={questionIndex} className='question flex flex-col gap-[15px]'>
-                    <div className="questionTitle flex flex-row gap-4 items-center justify-center">
-                        <label>Q{questionIndex + 1}.</label>
+                    <div className="questionTitle flex flex-col gap-4 items-center justify-center">
+                        <p className='text-2xl font-bold'>Question {questionIndex + 1}</p>
                         <input className='rounded-md border-gray-400 border outline-none p-[5px]' type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
                     </div>
                     <div className="options flex flex-col justify-center gap-[20px]">
