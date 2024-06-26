@@ -33,6 +33,14 @@ const CreateQuiz = () => {
         setQuestions([...questions, { title: '', options: ['', '', '', ''], answer: -1 }])
     }
 
+    const handleCreateQuiz = () => {
+        fetch('http://localhost:3000/api/createQuiz', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({questions})
+        }).then(res => res.text()).then(data => console.log(data))
+    }
+
     useEffect(() => {
         console.log(questions)
     }, [questions])
@@ -57,6 +65,7 @@ const CreateQuiz = () => {
                 </div>
             })}
             <button onClick={handleAddQuestion}>Add Question</button>
+            <button onClick={handleCreateQuiz}>Create Quiz</button>
         </div>
     )
 }
