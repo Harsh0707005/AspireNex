@@ -29,9 +29,27 @@ app.post('/api/createQuiz', (req, res) => {
 
 app.get("/quiz/:path", async(req, res) => {
     let quizId = req.params.path
-    const question = await Quiz.findById(quizId)
-    console.log(question)
-    res.send("Fs")
+    let questionIndex = 0
+    if (req.query.questionIndex){
+        questionIndex = req.query.questionIndex
+    }
+    const dbResData = await Quiz.findById(quizId)
+    const questions = dbResData.questions 
+    data = {}
+    data.question = questions[questionIndex].title
+    data.options = questions[questionIndex].options
+    data.totalQuestions = questions.length
+    // console.log(data)
+    res.json(data)
+})
+
+app.get("/quiz/checkAnswer/:path", async(req, res) => {
+    let quizId = req.params.path
+    let questionIndex = req.query.question
+    let answer = req.query.answer
+    const dbResData = await Quiz.findById(quizId)
+    
+    res.json({correct: dbResData.questions[questionIndex].answer == answer})
 })
 
 app.listen(port, () => {
