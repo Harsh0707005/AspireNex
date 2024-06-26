@@ -27,7 +27,7 @@ const CreateQuiz = () => {
         console.log(questions)
     }, [questions])
     return (
-        <div>
+        <div className='flex flex-col gap-[20px]'>
             {questions.map((question, questionIndex) => {
                 return <div key={questionIndex} className='question flex flex-col items-center gap-[15px]'>
                     <div className="questionTitle flex flex-row gap-4">
