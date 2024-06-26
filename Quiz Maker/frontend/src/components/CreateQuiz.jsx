@@ -10,7 +10,6 @@ const CreateQuiz = () => {
                 document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.classList.remove("bg-green-400")
                 document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.querySelectorAll('input').forEach((input) => {
                     input.classList.remove("bg-green-400")
-                
                 })
             }
             e.target.parentElement.classList.add('bg-green-400')
