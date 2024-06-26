@@ -25,10 +25,6 @@ const Quiz = () => {
     }
 
     useEffect(() => {
-        console.log(score)
-    }, [score])
-
-    useEffect(() => {
         async function getQuestion() {
             document.getElementsByName('option').forEach(radio => radio.checked = false)
             await fetch(`http://localhost:3000/quiz/${quizId}?questionIndex=${questionIndex}`).then(res => res.json()).then(data => {
