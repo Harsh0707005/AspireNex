@@ -20,7 +20,7 @@ app.post('/api/createQuiz', (req, res) => {
 
     Quiz.insertMany({questions: req.body.questions}).then((doc)=>{
         console.log(doc[0]._id.toString())
-        res.status(201).send("Quiz created successfully")
+        res.status(201).json({url: "http://localhost:5173/quiz/" + doc[0]._id.toString()})
     }).catch((e)=>{
         console.log(e)
         res.status(400).send("Failed to create quiz")

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 
 const CreateQuiz = () => {
     const [questions, setQuestions] = useState([{ title: 'rj', options: ['abc', 'cds', '', ''], answer: -1 }])
+    const [createdQuiz, setCreatedQuiz] = useState("http://localhost:5173/quiz/667d4aeb9e1d8c858edd66b5")
 
     const handleInputChange = (e, questionIndex, optionIndex = null, selectCorrect = false) => {
         const updatedQuestions = [...questions]
         if (selectCorrect) {
-            if (updatedQuestions[questionIndex].answer !== -1){
+            if (updatedQuestions[questionIndex].answer !== -1) {
                 // document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.classList.remove("bg-green-400")
                 document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.querySelectorAll('input').forEach((input) => {
                     input.classList.remove("bg-green-400")
@@ -38,8 +39,17 @@ const CreateQuiz = () => {
         fetch('http://localhost:3000/api/createQuiz', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({questions})
-        }).then(res => res.text()).then(data => console.log(data))
+            body: JSON.stringify({ questions })
+        }).then(res => res.json()).then(data => setCreatedQuiz(data.url))
+    }
+
+    const handleCopy = async() => {
+        try {
+            await navigator.clipboard.writeText(createdQuiz);
+            console.log('Content copied to clipboard');
+          } catch (err) {
+            console.error('Failed to copy: ', err);
+          }
     }
 
     // useEffect(() => {
@@ -47,26 +57,43 @@ const CreateQuiz = () => {
     // }, [questions])
     return (
         <div className='flex flex-col gap-[20px]'>
-            {questions.map((question, questionIndex) => {
-                return <div key={questionIndex} className='question flex flex-col gap-[15px]'>
-                    <div className="questionTitle flex flex-col gap-4 items-center justify-center">
-                        <p className='text-2xl font-bold'>Question {questionIndex + 1}</p>
-                        <input className='rounded-md border-gray-400 border outline-none p-[5px]' type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
-                    </div>
-                    <div className="options flex flex-col justify-center gap-[20px]">
-                        {question.options.map((option, optionIndex) => {
-                            return <div key={optionIndex} className='option flex flex-row gap-[10px] items-center rounded-lg p-[10px]'>
-                                <input type="radio" id={questionIndex + ":" + (optionIndex+1)} name={questionIndex} onChange={(e) => handleInputChange(e, questionIndex, optionIndex, true)} />
-                                <label htmlFor={questionIndex + ":" + optionIndex}>
-                                    <input className='rounded-md border-gray-400 border outline-none p-[5px]' type='text' value={option} placeholder={'Option ' + (optionIndex + 1)} onChange={(e) => handleInputChange(e, questionIndex, optionIndex = optionIndex)} />
-                                </label>
-                            </div>
-                        })}
+            {createdQuiz ? (
+                <div className='flex flex-col items-center justify-center w-[100vw] h-[100vh] bg-green-400'>
+                    <h2>Quiz Created Successfully!</h2>
+                    <div className='flex flex-row '>
+                        <p className='flex flex-row items-center bg-white text-black p-[10px] rounded-l-lg border-[2px] border-gray-800'>{createdQuiz}</p>
+                        <div className='bg-slate-800 rounded-r-lg p-[5px] cursor-pointer hover:bg-slate-600' onClick={handleCopy}>
+                            <svg width="40px" height="40px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 12.9V17.1C16 20.6 14.6 22 11.1 22H6.9C3.4 22 2 20.6 2 17.1V12.9C2 9.4 3.4 8 6.9 8H11.1C14.6 8 16 9.4 16 12.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M22 6.9V11.1C22 14.6 20.6 16 17.1 16H16V12.9C16 9.4 14.6 8 11.1 8H8V6.9C8 3.4 9.4 2 12.9 2H17.1C20.6 2 22 3.4 22 6.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+</div>
                     </div>
                 </div>
-            })}
-            <button className='rounded-lg bg-slate-200 p-[15px] hover:bg-slate-300' onClick={handleAddQuestion}>&#65291; Add Question</button>
-            <button className='rounded-lg bg-green-400 p-[15px] hover:bg-green-500' onClick={handleCreateQuiz}>Create Quiz</button>
+            ) : (
+                <>
+                    {questions.map((question, questionIndex) => (
+                        <div key={questionIndex} className='question flex flex-col gap-[15px]'>
+                            <div className="questionTitle flex flex-col gap-4 items-center justify-center">
+                                <p className='text-2xl font-bold'>Question {questionIndex + 1}</p>
+                                <input className='rounded-md border-gray-400 border outline-none p-[5px]' type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
+                            </div>
+                            <div className="options flex flex-col justify-center gap-[20px]">
+                                {question.options.map((option, optionIndex) => (
+                                    <div key={optionIndex} className='option flex flex-row gap-[10px] items-center rounded-lg p-[10px]'>
+                                        <input type="radio" id={questionIndex + ":" + (optionIndex + 1)} name={questionIndex} onChange={(e) => handleInputChange(e, questionIndex, optionIndex, true)} />
+                                        <label htmlFor={questionIndex + ":" + optionIndex}>
+                                            <input className='rounded-md border-gray-400 border outline-none p-[5px]' type='text' value={option} placeholder={'Option ' + (optionIndex + 1)} onChange={(e) => handleInputChange(e, questionIndex, optionIndex)} />
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                    <button className='rounded-lg bg-slate-200 p-[15px] hover:bg-slate-300' onClick={handleAddQuestion}>&#65291; Add Question</button>
+                    <button className='rounded-lg bg-green-400 p-[15px] hover:bg-green-500' onClick={handleCreateQuiz}>Create Quiz</button>
+                </>
+            )}
         </div>
     )
 }
