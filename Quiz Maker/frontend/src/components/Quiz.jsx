@@ -73,7 +73,7 @@ const Quiz = () => {
                                 </div>
                             </div>
                             <div className='w-[60vw]' dir='rtl'>
-                                <span className=''><b>Score: </b> {score}</span>
+                                <span><b>Score: </b> {score}</span>
                             </div>
                             <span className='font-semibold text-xl'>Question {questionIndex + 1}</span>
                             <span className='m-[20px]'>{question}</span>
@@ -88,7 +88,9 @@ const Quiz = () => {
                                     )
                                 })}
                             </div>
+                            <div className='w-[60vw] mobile:w-[90vw]' dir='rtl'>
                             <button className='w-[100px] rounded-2xl bg-blue-500 p-[15px] hover:bg-blue-600 text-white font-semibold' onClick={checkAnswer}>Next</button>
+                            </div>
                         </>)
             }
         </div>
