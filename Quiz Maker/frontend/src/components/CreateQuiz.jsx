@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { ShareSocial } from 'react-share-social'
 
 const CreateQuiz = () => {
     const [questions, setQuestions] = useState([{ title: 'rj', options: ['abc', 'cds', '', ''], answer: -1 }])
@@ -43,32 +44,50 @@ const CreateQuiz = () => {
         }).then(res => res.json()).then(data => setCreatedQuiz(data.url))
     }
 
-    const handleCopy = async() => {
+    const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(createdQuiz);
             console.log('Content copied to clipboard');
-          } catch (err) {
+        } catch (err) {
             console.error('Failed to copy: ', err);
-          }
+        }
     }
 
     // useEffect(() => {
     //     console.log(questions)
     // }, [questions])
+
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js";
+        script.onload = () => {
+            const lottie = document.createElement("lottie-player");
+            lottie.src = "https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json";
+            document.body.appendChild(lottie)
+        };
+        document.body.appendChild(script);
+    })
+
     return (
         <div className='flex flex-col gap-[20px]'>
             {createdQuiz ? (
-                <div className='flex flex-col items-center justify-center w-[100vw] h-[100vh] bg-green-400'>
-                    <h2>Quiz Created Successfully!</h2>
+                <div className='flex flex-row items-center justify-center w-[100vw] h-[100vh] bg-green-400 gap-[10px]'>
+                    <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1 }} loop autoplay direction="1" mode="normal"></lottie-player>
+                    <ShareSocial title={'Quiz Created Successfully!!! Share on Social Platforms'} style={shareStyle} url={createdQuiz} socialTypes={['facebook', 'whatsapp', 'twitter', 'reddit', 'linkedin', 'telegram', 'line']} />
+                    <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, rotate:"-90deg" }} loop autoplay direction="0" mode="normal"></lottie-player>
+                    <lottie-player src="https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json" background="##FFFFFF" speed="0.5" style={{ width: 800, height: 800, position: 'absolute', zIndex: 1 }} loop autoplay direction="1" mode="normal">
+                    </lottie-player>
+
+                    {/* <h2>Quiz Created Successfully!</h2>
                     <div className='flex flex-row '>
                         <p className='flex flex-row items-center bg-white text-black p-[10px] rounded-l-lg border-[2px] border-gray-800'>{createdQuiz}</p>
                         <div className='bg-slate-800 rounded-r-lg p-[5px] cursor-pointer hover:bg-slate-600' onClick={handleCopy}>
                             <svg width="40px" height="40px" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-<path d="M16 12.9V17.1C16 20.6 14.6 22 11.1 22H6.9C3.4 22 2 20.6 2 17.1V12.9C2 9.4 3.4 8 6.9 8H11.1C14.6 8 16 9.4 16 12.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-<path d="M22 6.9V11.1C22 14.6 20.6 16 17.1 16H16V12.9C16 9.4 14.6 8 11.1 8H8V6.9C8 3.4 9.4 2 12.9 2H17.1C20.6 2 22 3.4 22 6.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-</svg>
-</div>
-                    </div>
+                                <path d="M16 12.9V17.1C16 20.6 14.6 22 11.1 22H6.9C3.4 22 2 20.6 2 17.1V12.9C2 9.4 3.4 8 6.9 8H11.1C14.6 8 16 9.4 16 12.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M22 6.9V11.1C22 14.6 20.6 16 17.1 16H16V12.9C16 9.4 14.6 8 11.1 8H8V6.9C8 3.4 9.4 2 12.9 2H17.1C20.6 2 22 3.4 22 6.9Z" stroke="#292D32" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                    </div> */}
                 </div>
             ) : (
                 <>
@@ -97,5 +116,27 @@ const CreateQuiz = () => {
         </div>
     )
 }
+const shareStyle = {
+    root: {
+        // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        background: 'black',
+        borderRadius: '10px',
+        border: 0,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        zIndex: 2
+
+    },
+    copyContainer: {
+        border: '1px solid white',
+        background: 'rgb(0,0,0,0.7)',
+        borderRadius: '10px'
+
+    },
+    title: {
+        color: 'aquamarine',
+        fontStyle: 'italic',
+    }
+};
 
 export default CreateQuiz

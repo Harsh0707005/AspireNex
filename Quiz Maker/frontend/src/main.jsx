@@ -13,11 +13,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/create",
-    element: <> <CreateQuiz/> </>
+    element: <> <CreateQuiz /> </>
   },
   {
     path: "/quiz/:quizId",
-    element: <> <Quiz/> </>
+    element: <> <Quiz /> </>
   },
   {
     path: "/profile/:username",
@@ -26,7 +26,8 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  //   <RouterProvider router={router} />
+  // </React.StrictMode>,
+  <RouterProvider router={router} />
 )
