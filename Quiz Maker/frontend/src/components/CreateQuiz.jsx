@@ -3,7 +3,7 @@ import { ShareSocial } from 'react-share-social'
 
 const CreateQuiz = () => {
     const [questions, setQuestions] = useState([{ title: 'rj', options: ['abc', 'cds', '', ''], answer: -1 }])
-    const [createdQuiz, setCreatedQuiz] = useState("http://localhost:5173/quiz/667d4aeb9e1d8c858edd66b5")
+    const [createdQuiz, setCreatedQuiz] = useState(null)
 
     const handleInputChange = (e, questionIndex, optionIndex = null, selectCorrect = false) => {
         const updatedQuestions = [...questions]
@@ -74,7 +74,7 @@ const CreateQuiz = () => {
                 <div className='flex flex-row items-center justify-center w-[100vw] h-[100vh] bg-green-400 gap-[10px]'>
                     <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1 }} loop autoplay direction="1" mode="normal"></lottie-player>
                     <ShareSocial title={'Quiz Created Successfully!!! Share on Social Platforms'} style={shareStyle} url={createdQuiz} socialTypes={['facebook', 'whatsapp', 'twitter', 'reddit', 'linkedin', 'telegram', 'line']} />
-                    <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, rotate:"-90deg" }} loop autoplay direction="0" mode="normal"></lottie-player>
+                    <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, transform:"scaleX(-1)" }} loop autoplay direction="0" mode="normal"></lottie-player>
                     <lottie-player src="https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json" background="##FFFFFF" speed="0.5" style={{ width: 800, height: 800, position: 'absolute', zIndex: 1 }} loop autoplay direction="1" mode="normal">
                     </lottie-player>
 
