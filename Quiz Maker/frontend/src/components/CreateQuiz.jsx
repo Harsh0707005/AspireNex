@@ -15,8 +15,8 @@ const CreateQuiz = () => {
                 })
             }
             // e.target.parentElement.classList.add('bg-green-400')
-            e.target.parentElement.querySelectorAll('input').forEach((input) => {
-                input.classList.add("bg-green-400")
+            e.target.parentElement.querySelectorAll('textarea').forEach((textarea) => {
+                textarea.classList.add("bg-green-400")
             })
             updatedQuestions[questionIndex].answer = optionIndex + 1
             setQuestions(updatedQuestions)
@@ -53,16 +53,11 @@ const CreateQuiz = () => {
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js";
-        script.onload = () => {
-            const lottie = document.createElement("lottie-player");
-            lottie.src = "https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json";
-            document.body.appendChild(lottie)
-        };
         document.body.appendChild(script);
-    })
+    }, [])
 
     return (
-        <div className='flex flex-col gap-[20px] p-[20px]'>
+        <div className='flex flex-col gap-[20px]'>
             {createdQuiz ? (
                 <div className='flex flex-row items-center justify-center w-[100vw] h-[100vh] bg-green-400 gap-[10px]'>
                     <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1 }} loop autoplay direction="1" mode="normal"></lottie-player>
@@ -83,7 +78,7 @@ const CreateQuiz = () => {
                     </div> */}
                 </div>
             ) : (
-                <>
+                <div className='flex flex-col gap-[20px] p-[20px]'>
                     {questions.map((question, questionIndex) => (
                         <div key={questionIndex} className='question flex flex-col gap-[15px]'>
                             <div className="questionTitle flex flex-col gap-4 items-center justify-center">
@@ -104,7 +99,7 @@ const CreateQuiz = () => {
                     ))}
                     <button className='rounded-lg bg-slate-200 p-[15px] hover:bg-slate-300' onClick={handleAddQuestion}>&#65291; Add Question</button>
                     <button className='rounded-lg bg-green-400 p-[15px] hover:bg-green-500' onClick={handleCreateQuiz}>Create Quiz</button>
-                </>
+                </div>
             )}
         </div>
     )
@@ -123,7 +118,8 @@ const shareStyle = {
     copyContainer: {
         border: '1px solid white',
         background: 'rgb(0,0,0,0.7)',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        overflow: 'auto'
 
     },
     title: {
