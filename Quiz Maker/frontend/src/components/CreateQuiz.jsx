@@ -38,6 +38,10 @@ const CreateQuiz = () => {
         setQuestions([...questions, { title: '', options: ['', '', '', ''], answer: -1 }])
     }
 
+    const checkInputs = () => {
+
+    }
+
     const handleCreateQuiz = () => {
         fetch('http://localhost:3000/api/createQuiz', {
             method: 'POST',
@@ -78,7 +82,7 @@ const CreateQuiz = () => {
                     </div> */}
                 </div>
             ) : (
-                <div className='flex flex-col gap-[20px] p-[20px]'>
+                <div className='flex flex-col gap-[20px] p-[20px] mobile:items-center'>
                     {questions.map((question, questionIndex) => (
                         <div key={questionIndex} className='question flex flex-col gap-[15px]'>
                             <div className="questionTitle flex flex-col gap-4 items-center justify-center">
