@@ -62,7 +62,7 @@ const CreateQuiz = () => {
     })
 
     return (
-        <div className='flex flex-col gap-[20px] p-[10px]'>
+        <div className='flex flex-col gap-[20px] p-[20px]'>
             {createdQuiz ? (
                 <div className='flex flex-row items-center justify-center w-[100vw] h-[100vh] bg-green-400 gap-[10px]'>
                     <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1 }} loop autoplay direction="1" mode="normal"></lottie-player>
@@ -88,7 +88,7 @@ const CreateQuiz = () => {
                         <div key={questionIndex} className='question flex flex-col gap-[15px]'>
                             <div className="questionTitle flex flex-col gap-4 items-center justify-center">
                                 <p className='text-2xl font-bold'>Question {questionIndex + 1}</p>
-                                <textarea rows={1} className='resize-none rounded-md border-gray-400 border outline-none p-[5px] min-w-[250px] max-w-[80vw]' type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
+                                <textarea rows={1} className='resize-none rounded-md border-gray-400 border outline-none p-[5px] min-w-[250px] max-w-[80vw] text-center' type="text" value={question.title} placeholder='Question' onChange={(e) => handleInputChange(e, questionIndex)} />
                             </div>
                             <div className="options flex flex-col justify-center gap-[20px]">
                                 {question.options.map((option, optionIndex) => (
