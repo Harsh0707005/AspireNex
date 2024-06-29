@@ -5,11 +5,12 @@ import './index.css'
 import { createBrowserRouter, Router, RouterProvider } from 'react-router-dom'
 import CreateQuiz from './components/CreateQuiz.jsx'
 import Quiz from './components/Quiz.jsx'
+import Home from './components/Home.jsx'
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <> </>
+    element: <><Home/> </>
   },
   {
     path: "/create",
@@ -18,10 +19,6 @@ const router = createBrowserRouter([
   {
     path: "/quiz/:quizId",
     element: <> <Quiz /> </>
-  },
-  {
-    path: "/profile/:username",
-    element: <></>
   }
 ])
 

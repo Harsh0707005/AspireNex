@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import {
-    EmailShareButton,
-    FacebookShareButton, LineShareButton,
-    LinkedinShareButton, PinterestShareButton, RedditShareButton,
-    TelegramShareButton, TumblrShareButton,
-    TwitterShareButton, WhatsappShareButton
-} from 'react-share'
+// import {
+//     EmailShareButton,
+//     FacebookShareButton, LineShareButton,
+//     LinkedinShareButton, PinterestShareButton, RedditShareButton,
+//     TelegramShareButton, TumblrShareButton,
+//     TwitterShareButton, WhatsappShareButton
+// } from 'react-share'
 
 const Quiz = () => {
     const { quizId } = useParams()
@@ -85,7 +85,7 @@ const Quiz = () => {
                                 <span className='font-semibold'>Your Score</span>
                                 <span className='font-bold text-2xl'>{score}/{totalQuestions}</span>
                                 <button className='rounded-2xl bg-blue-500 p-[15px] hover:bg-blue-600 text-white font-semibold mt-[10px]' onClick={retakeButton}>Retake Quiz</button>
-                                <button className='rounded-2xl bg-orange-500 p-[15px] hover:bg-orange-600 text-white font-semibold' onClick={shareButtonShow}>Share Your Score</button>
+                                {/* <button className='rounded-2xl bg-orange-500 p-[15px] hover:bg-orange-600 text-white font-semibold' onClick={shareButtonShow}>Share Your Score</button> */}
                             </div>
                         </div>
                         <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, transform: "scaleX(-1)", zIndex: 2 }} loop autoplay direction="0" mode="normal"></lottie-player>
