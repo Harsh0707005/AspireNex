@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import {
+    EmailShareButton,
+    FacebookShareButton, LineShareButton,
+    LinkedinShareButton, PinterestShareButton, RedditShareButton,
+    TelegramShareButton, TumblrShareButton,
+    TwitterShareButton, WhatsappShareButton
+} from 'react-share'
 
 const Quiz = () => {
     const { quizId } = useParams()
@@ -9,13 +16,15 @@ const Quiz = () => {
     const [questionIndex, setQuestionIndex] = useState(0)
     const [score, setScore] = useState(0)
     const [totalQuestions, setTotalQuestions] = useState(0)
-    const [quizFinished, setQuizFinished] = useState(true)
+    const [quizFinished, setQuizFinished] = useState(false)
 
     async function checkAnswer() {
         await fetch(`http://localhost:3000/quiz/checkAnswer/${quizId}?question=${questionIndex}&answer=${selectedAnswer}`).then(res => res.json()).then(data => {
             if (data.correct & score < totalQuestions) {
                 localStorage.setItem(quizId, score + 1)
                 setScore(score + 1)
+            }else{
+                localStorage.setItem(quizId, score)
             }
             if (questionIndex + 1 == totalQuestions) {
                 setQuizFinished(true)
@@ -24,6 +33,16 @@ const Quiz = () => {
             }
         })
     }
+
+    useEffect(() => {
+        if (localStorage.getItem(quizId)){
+
+            setScore(parseInt(localStorage.getItem(quizId)))
+            setQuizFinished(true)
+        }else{
+            setScore(0)
+        }
+    }, [])
 
     useEffect(() => {
         async function getQuestion() {
@@ -44,8 +63,14 @@ const Quiz = () => {
         document.body.appendChild(script);
     }, [])
 
-    const shareButtonShow = () => {
-        
+    const shareButtonShow = (e) => {
+        e.target.insertAdjacentHTML('afterend', "<ShareSocial title={'Quiz Created Successfully!!! Share on Social Platforms'} style='width:500px;height:500px;' url='fdsf.com' socialTypes={['facebook', 'whatsapp', 'twitter', 'reddit', 'linkedin', 'telegram', 'line']} />")
+    }
+
+    const retakeButton = () => {
+        localStorage.removeItem(quizId)
+        setScore(0)
+        setQuizFinished(0)
     }
 
     return (
@@ -59,14 +84,14 @@ const Quiz = () => {
                             <div className='flex flex-col bg-golden rounded-xl p-[10px] gap-[10px]'>
                                 <span className='font-semibold'>Your Score</span>
                                 <span className='font-bold text-2xl'>{score}/{totalQuestions}</span>
-                                <button className='rounded-2xl bg-blue-500 p-[15px] hover:bg-blue-600 text-white font-semibold mt-[10px]'>Retake Quiz</button>
+                                <button className='rounded-2xl bg-blue-500 p-[15px] hover:bg-blue-600 text-white font-semibold mt-[10px]' onClick={retakeButton}>Retake Quiz</button>
                                 <button className='rounded-2xl bg-orange-500 p-[15px] hover:bg-orange-600 text-white font-semibold' onClick={shareButtonShow}>Share Your Score</button>
                             </div>
                         </div>
                         <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, transform: "scaleX(-1)", zIndex: 2 }} loop autoplay direction="0" mode="normal"></lottie-player>
-                        
+
                         {/* Firecrackers */}
-                        <lottie-player src="https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json" background="##FFFFFF" speed="0.5" style={{ width: 900, height: 950, position: 'absolute', zIndex: 1}} loop autoplay direction="1" mode="normal">
+                        <lottie-player src="https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json" background="##FFFFFF" speed="0.5" style={{ width: 900, height: 950, position: 'absolute', zIndex: 1 }} loop autoplay direction="1" mode="normal">
                         </lottie-player>
 
 
