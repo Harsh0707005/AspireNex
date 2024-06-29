@@ -10,7 +10,7 @@ const Home = () => {
     }
 
     return (
-        <div className='flex flex-col bg-gray-100'>
+        <div className='flex flex-col justify-center bg-gray-100 h-[100vh]'>
             <div className="container mx-auto mt-10">
                 <div className="text-center py-20 px-20 bg-white rounded-lg shadow-lg">
                     <h2 className="text-4xl font-bold mb-6">Create and Take Quizzes Easily</h2>
