@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ShareSocial } from 'react-share-social'
+import LoadingAnimation from './LoadingAnimation'
 
 const CreateQuiz = () => {
     const [questions, setQuestions] = useState([{ title: 'rj', options: ['abc', 'cds', '', ''], answer: -1 }])
@@ -68,12 +69,6 @@ const CreateQuiz = () => {
         script.src = "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js";
         document.body.appendChild(script);
     }, [])
-
-    const LoadingAnimation = () => {
-        return <div className='flex flex-row w-[100%] h-[100%] justify-center items-center bg-green-400'>
-            <lottie-player src="https://lottie.host/bf5d2b0e-16e5-4c62-876f-61c86aea2b7a/Ps5vNDl4V2.json" background="##3490dc" speed="1" style={{ width: "300px", height: "300px" }} loop autoplay direction="1" mode="normal"></lottie-player>
-        </div>
-    }
 
     const QuizCreated = ({ createdQuiz }) => {
         return <div className='flex flex-row items-center justify-center w-[100vw] h-[100vh] bg-green-400 gap-[10px]'>
