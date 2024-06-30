@@ -71,6 +71,8 @@ const Quiz = () => {
         localStorage.removeItem(quizId)
         setScore(0)
         setQuizFinished(0)
+        setQuestionIndex(0)
+        setQuestion(null)
     }
 
     return (
@@ -88,7 +90,7 @@ const Quiz = () => {
                                 {/* <button className='rounded-2xl bg-orange-500 p-[15px] hover:bg-orange-600 text-white font-semibold' onClick={shareButtonShow}>Share Your Score</button> */}
                             </div>
                         </div>
-                        <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, zIndex: 1, transform: "scaleX(-1)", zIndex: 2 }} loop autoplay direction="0" mode="normal"></lottie-player>
+                        <lottie-player src="https://lottie.host/f61b4eea-5712-42c3-ab5a-79387cfec522/4CFG4nJJoq.json" background="##FFFFFF" speed="0.5" style={{ width: 200, height: 200, transform: "scaleX(-1)", zIndex: 2 }} loop autoplay direction="0" mode="normal"></lottie-player>
 
                         {/* Firecrackers */}
                         <lottie-player src="https://lottie.host/2ef7c797-194b-45d6-9aa8-ea84c43a3ff9/JLM5qM0nEm.json" background="##FFFFFF" speed="0.5" style={{ width: 900, height: 950, position: 'absolute', zIndex: 1 }} loop autoplay direction="1" mode="normal">

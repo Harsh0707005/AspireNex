@@ -18,7 +18,7 @@ const CreateQuiz = () => {
             e.target.parentElement.querySelectorAll('textarea').forEach((textarea) => {
                 textarea.classList.add("bg-green-400")
             })
-            updatedQuestions[questionIndex].answer = optionIndex + 1
+            updatedQuestions[questionIndex].answer = optionIndex
             setQuestions(updatedQuestions)
             return
         }
