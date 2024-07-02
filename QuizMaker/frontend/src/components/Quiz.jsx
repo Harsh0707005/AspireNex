@@ -22,7 +22,7 @@ const Quiz = () => {
 
     async function checkAnswer() {
         setLoading(true)
-        await fetch(`https://quakky-quizzy-backend.vercel.app/quiz/checkAnswer/${quizId}?question=${questionIndex}&answer=${selectedAnswer}`).then(res => res.json()).then(data => {
+        await fetch(`https://aspire-nex-blue.vercel.app/quiz/checkAnswer/${quizId}?question=${questionIndex}&answer=${selectedAnswer}`).then(res => res.json()).then(data => {
             if (data.correct & score < totalQuestions) {
                 localStorage.setItem(quizId, JSON.stringify({score: score + 1, total: totalQuestions}))
                 setScore(score + 1)
@@ -52,7 +52,7 @@ const Quiz = () => {
     useEffect(() => {
         async function getQuestion() {
             document.getElementsByName('option').forEach(radio => radio.checked = false)
-            await fetch(`https://quakky-quizzy-backend.vercel.app/quiz/${quizId}?questionIndex=${questionIndex}`).then(res => res.json()).then(data => {
+            await fetch(`https://aspire-nex-blue.vercel.app/quiz/${quizId}?questionIndex=${questionIndex}`).then(res => res.json()).then(data => {
                 setQuestion(data.question)
                 setOptions(data.options)
                 setTotalQuestions(data.totalQuestions)

@@ -83,7 +83,7 @@ const CreateQuiz = () => {
             return
         }
         setLoading(true)
-        fetch('https://quakky-quizzy-backend.vercel.app/api/createQuiz', {
+        fetch('https://aspire-nex-blue.vercel.app/api/createQuiz', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ questions })
