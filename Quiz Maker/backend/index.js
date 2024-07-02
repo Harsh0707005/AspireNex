@@ -3,14 +3,18 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
-const port = 3000;
+const port = process.env.PORT || 3000;
+require('dotenv').config();
 
 const app = express();
 
 app.use(cors());
+
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb+srv://harsh:mongoharshpassword@prod-mumbai-cluster1.jusrsut.mongodb.net/?appName=prod-mumbai-cluster1')
+const db_uri = process.env.MONGODB_URI;
+
+mongoose.connect(db_uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.log(err));
 
@@ -20,7 +24,7 @@ app.post('/api/createQuiz', (req, res) => {
 
     Quiz.insertMany({questions: req.body.questions}).then((doc)=>{
         // console.log(doc[0]._id.toString())
-        res.status(201).json({url: "http://localhost:5173/quiz/" + doc[0]._id.toString()})
+        res.status(201).json({url: "https://quakky-quizzy-frontend.vercel.app/quiz/" + doc[0]._id.toString()})
     }).catch((e)=>{
         console.log(e)
         res.status(400).send("Failed to create quiz")
@@ -50,6 +54,10 @@ app.get("/quiz/checkAnswer/:path", async(req, res) => {
     const dbResData = await Quiz.findById(quizId)
     
     res.json({correct: dbResData.questions[questionIndex].answer == answer})
+})
+
+app.get("/test", (req, res) => {
+    res.send("Hello World")
 })
 
 app.listen(port, () => {

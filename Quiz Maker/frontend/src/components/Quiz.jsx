@@ -18,16 +18,16 @@ const Quiz = () => {
     const [score, setScore] = useState(0)
     const [totalQuestions, setTotalQuestions] = useState(0)
     const [quizFinished, setQuizFinished] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     async function checkAnswer() {
         setLoading(true)
-        await fetch(`http://localhost:3000/quiz/checkAnswer/${quizId}?question=${questionIndex}&answer=${selectedAnswer}`).then(res => res.json()).then(data => {
+        await fetch(`https://quakky-quizzy-backend.vercel.app/quiz/checkAnswer/${quizId}?question=${questionIndex}&answer=${selectedAnswer}`).then(res => res.json()).then(data => {
             if (data.correct & score < totalQuestions) {
-                localStorage.setItem(quizId, score + 1)
+                localStorage.setItem(quizId, JSON.stringify({score: score + 1, total: totalQuestions}))
                 setScore(score + 1)
             } else {
-                localStorage.setItem(quizId, score)
+                localStorage.setItem(quizId, JSON.stringify({score: score + 1, total: totalQuestions}))
             }
             if (questionIndex + 1 == totalQuestions) {
                 setQuizFinished(true)
@@ -41,7 +41,8 @@ const Quiz = () => {
     useEffect(() => {
         if (localStorage.getItem(quizId)) {
 
-            setScore(parseInt(localStorage.getItem(quizId)))
+            setScore(parseInt(JSON.parse(localStorage.getItem(quizId)).score))
+            setTotalQuestions(parseInt(JSON.parse(localStorage.getItem(quizId)).total))
             setQuizFinished(true)
         } else {
             setScore(0)
@@ -51,7 +52,7 @@ const Quiz = () => {
     useEffect(() => {
         async function getQuestion() {
             document.getElementsByName('option').forEach(radio => radio.checked = false)
-            await fetch(`http://localhost:3000/quiz/${quizId}?questionIndex=${questionIndex}`).then(res => res.json()).then(data => {
+            await fetch(`https://quakky-quizzy-backend.vercel.app/quiz/${quizId}?questionIndex=${questionIndex}`).then(res => res.json()).then(data => {
                 setQuestion(data.question)
                 setOptions(data.options)
                 setTotalQuestions(data.totalQuestions)

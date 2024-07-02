@@ -6,14 +6,15 @@ const CreateQuiz = () => {
     const [questions, setQuestions] = useState([{ title: 'rj', options: ['abc', 'cds', '', ''], answer: -1 }])
     const [createdQuiz, setCreatedQuiz] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [showToast, setShowToast] = useState(null)
 
     const handleInputChange = (e, questionIndex, optionIndex = null, selectCorrect = false) => {
         const updatedQuestions = [...questions]
         if (selectCorrect) {
             if (updatedQuestions[questionIndex].answer !== -1) {
                 // document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.classList.remove("bg-green-400")
-                document.getElementById(questionIndex + ":" + (updatedQuestions[questionIndex].answer)).parentElement.querySelectorAll('input').forEach((input) => {
-                    input.classList.remove("bg-green-400")
+                e.target.parentElement.parentElement.querySelectorAll('textarea').forEach((textarea) => {
+                    textarea.classList.remove("bg-green-400")
                 })
             }
             // e.target.parentElement.classList.add('bg-green-400')
@@ -37,16 +38,52 @@ const CreateQuiz = () => {
     }
 
     const handleAddQuestion = () => {
+
+        if (!checkInputs()) {
+            return
+        }
         setQuestions([...questions, { title: '', options: ['', '', '', ''], answer: -1 }])
     }
 
     const checkInputs = () => {
-
+        let valid = true
+        document.querySelectorAll('textarea').forEach((textarea) => {
+            if (textarea.value.trim() === '') {
+                textarea.classList.add('border-red-500')
+                valid = false
+                if (showToast == null) {
+                    setShowToast({ message: "Please fill all the fields", type: "error" })
+                }
+            } else {
+                textarea.classList.remove('border-red-500')
+            }
+        }
+        )
+        if (valid && document.querySelectorAll('input[type="radio"]:checked').length !== questions.length) {
+            setShowToast({ message: "Please select the correct answer for all the questions", type: "error" })
+            valid = false
+        }
+        if (valid) {
+            return true
+        } else {
+            return false
+        }
     }
 
+    useEffect(() => {
+        if (showToast != null) {
+            setTimeout(() => {
+                setShowToast(null)
+            }, 5000)
+        }
+    }, [showToast])
+
     const handleCreateQuiz = () => {
+        if (!checkInputs()) {
+            return
+        }
         setLoading(true)
-        fetch('http://localhost:3000/api/createQuiz', {
+        fetch('https://quakky-quizzy-backend.vercel.app/api/createQuiz', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ questions })
@@ -80,14 +117,34 @@ const CreateQuiz = () => {
         </div>
     }
 
+    const Toast = ({ message, type }) => {
+
+        return <div id="toast-default" className={`fixed right-[20px] top-[20px] flex items-center w-full max-w-xs p-4 text-white ${type === "error" ? 'bg-red-600' : 'bg-green-500'} rounded-lg shadow`} role="alert">
+            <div className="ms-3 text-sm font-normal">
+                {message}
+            </div>
+            <button type="button" className="ms-auto -mx-1.5 -my-1.5 text-white hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-red-400 inline-flex items-center justify-center h-8 w-8" onClick={() => {
+                setShowToast(null)
+            }} aria-label="Close">
+                <span className="sr-only">Close</span>
+                <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+            </button>
+        </div>
+
+
+    }
+
     return (
         <div className='flex flex-col gap-[20px] h-[100vh]'>
+            {showToast && <Toast message={showToast.message} type={showToast.type} />}
             {loading ? (
-                <LoadingAnimation key='loadingAnimation'/>
+                <LoadingAnimation key='loadingAnimation' />
             ) : (
 
                 createdQuiz ? (
-                    <QuizCreated key='quiz-created-ui' createdQuiz={createdQuiz}/>
+                    <QuizCreated key='quiz-created-ui' createdQuiz={createdQuiz} />
                 ) : (
                     <div className='flex flex-col gap-[20px] p-[20px] mobile:items-center'>
                         {questions.map((question, questionIndex) => (
